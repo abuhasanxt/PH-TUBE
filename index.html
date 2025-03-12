@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ph-tube</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@5"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+      .active {
+        background-color: #ff1f3d;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav
+        class="flex justify-between items-center w-11/12 mx-auto py-4 border-b-2 border-[#17171720]"
+      >
+        <div>
+          <img class="w-[120px]" src="./asects/Logo.png" alt="" />
+        </div>
+        <div>
+          <button class="btn bg-[#25252520] text-[#252525]">
+            Sort by view
+          </button>
+        </div>
+        <div>
+          <button class="btn bg-[#FF1F3D] text-white">Blog</button>
+        </div>
+      </nav>
+    </header>
+    <nav id="categoryContainer" class="flex justify-center gap-5 py-5">
+      <div>
+        <button id="btn-all" onclick="loadVideos();" class="btn btn-sm">All</button>
+      </div>
+    </nav>
+
+    <section
+      id="videosContainer"
+      class="w-11/12 mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-5"
+    >
+      <div
+        class="py-20 col-span-full text-center flex flex-col justify-center items-center"
+      >
+        <img class="w-[120px]" src="./asects/Icon.png" alt="" />
+        <h2 class="text-2xl font-bold">
+          Oops!! Sorry, There is no content here
+        </h2>
+      </div>
+    </section>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
