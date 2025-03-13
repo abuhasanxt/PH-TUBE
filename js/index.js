@@ -15,8 +15,8 @@ function loadCategory() {
     .then((data) => displyCategorys(data.categories));
 }
 
-function loadVideos() {
-  fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
+function loadVideos(searchText="") {
+  fetch(`https://openapi.programming-hero.com/api/phero-tube/videos?title=${searchText}`)
     .then((Response) => Response.json())
     .then((data) => {
       document.getElementById("btn-all").classList.add("active");
@@ -40,6 +40,38 @@ https://openapi.programming-hero.com/api/phero-tube/category/${id}
     });
 };
 
+const loadVideoDetails = (videoId) => {
+  console.log(videoId);
+  const url = `https://openapi.programming-hero.com/api/phero-tube/video/${videoId}`;
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displyVideosDetails(data.video));
+};
+
+const displyVideosDetails = (video) => {
+  console.log(video);
+  document.getElementById("videoDetails").showModal();
+  const detailsContainer = document.getElementById("detailsContainer");
+  detailsContainer.innerHTML = `
+   <div class="card bg-base-100 image-full  shadow-sm">
+  <figure>
+    <img
+      src="${video.thumbnail}"
+      alt="hhhhh" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">${video.title}</h2>
+   
+    <div class="card-actions justify-end">
+    
+    <h2>${video.description}</h2>
+    </div>
+    </div>
+</div>
+
+
+  `;
+};
 // {category_id: '1001',
 //  category: 'Music'}
 
@@ -78,7 +110,9 @@ const displyVideos = (videos) => {
     videoCard.innerHTML = `
 <div class="card bg-base-100">
         <figure class="relative">
-          <img class="w-full md:h-[150px] object-cover" src="${video.thumbnail}" alt="Shoes" />
+          <img class="w-full md:h-[150px] object-cover" src="${
+            video.thumbnail
+          }" alt="Shoes" />
           <span
             class="absolute bottom-2 right-2 text-white text-sm bg-black rounded px-2"
             >3hrs 56 min ago</span
@@ -102,14 +136,27 @@ const displyVideos = (videos) => {
             <h2 class="text-sm font-semibold">Midnight Serenade</h2>
             <p class="text-sm text-gray-400 flex gap-1">
             ${video.authors[0].profile_name}
-             <img class="w-5 h-5" src="https://img.icons8.com/?size=96&id=102561&format=png" alt="">
+            ${
+              video.authors[0].verified == true
+                ? `<img class="w-5 h-5" src="https://img.icons8.com/?size=96&id=102561&format=png" alt="">`
+                : ` `
+            }
+            
             </p>
             <p class="text-sm text-gray-400">${video.others.views}</p>
           </div>
         </div>
+        <button onclick=loadVideoDetails('${
+          video.video_id
+        }') class="btn btn-block">Show Details</button>
       </div>
     `;
     videosContainer.append(videoCard);
   });
 };
+
+document.getElementById("searchInput").addEventListener("keyup", (e) => {
+  const input = e.target.value;
+  loadVideos(input);
+});
 loadCategory();
